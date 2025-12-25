@@ -9,6 +9,7 @@ pipeline {
         DOCKER_USER = 'prasad315'
         IMAGE_NAME  = "${DOCKER_USER}/java-welcome-app"
         GIT_REPO    = "github.com/prasad-dp/java-app.git"
+        Version = "v{env.BUILD_ID}"
     }
 
     stages {
@@ -23,7 +24,7 @@ pipeline {
 
                         // Step 2: Build and Push the Docker image
                         docker.withRegistry('', 'docker-hub-creds') {
-                            def img = docker.build("${IMAGE_NAME}:${env.BUILD_ID}", ".")
+                            def img = docker.build("${IMAGE_NAME}:${version}", ".")
                             img.push()
                             img.push('latest')
                         }
@@ -50,3 +51,4 @@ pipeline {
         }
     }
 }
+
