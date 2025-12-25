@@ -33,25 +33,26 @@ pipeline {
             }
         }
 
-        stage('Update Manifest') {
-            steps {
-                // NOTE: Using 'string' here because your github-token is 'Secret Text'
-                withCredentials([string(credentialsId: 'github-token', variable: 'GIT_TOKEN')]) {
-                    sh """
-                        git config user.email "durgaprasadkalepuu@gmail.com"
-                        git config user.name "prasad-dp"
-                        
-                        # Use the VERSION variable for consistency
-                        sed -i 's|image: .*|image: ${IMAGE_NAME}:${VERSION}|g' k8s/deployment.yaml
-                        
-                        git add k8s/deployment.yaml
-                        git commit -m "ArgoCD: Update image to version ${VERSION} [ci skip]"
-                        
-                        # FIXED: Using HEAD:main to resolve the 'refspec' error
-                        git push https://prasad-dp:${GIT_TOKEN}@${GIT_REPO} HEAD:main
-                    """
-                }
-            }
+    stage('Update Manifest') {
+    steps {
+        // Use usernamePassword because your credential is 'Username with password'
+        withCredentials([usernamePassword(credentialsId: 'github-token', passwordVariable: 'GIT_TOKEN', usernameVariable: 'G_USER')]) {
+            sh """
+                git config user.email "durgaprasadkalepuu@gmail.com"
+                git config user.name "prasad-dp"
+                
+                # Ensure the manifest is updated with the new version
+                sed -i 's|image: .*|image: ${IMAGE_NAME}:${VERSION}|g' k8s/deployment.yaml
+                
+                git add k8s/deployment.yaml
+                git commit -m "ArgoCD: Update image to ${VERSION} [ci skip]"
+                
+                # We use the G_USER and GIT_TOKEN variables provided by Jenkins
+                git push https://${G_USER}:${GIT_TOKEN}@${GIT_REPO} HEAD:main
+            """
         }
     }
 }
+    }
+}
+
