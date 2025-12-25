@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: welcome-java-app
-        image: prasad315/java-welcome-app:v8
+        image: prasad315/java-welcome-app:v9
         ports:
         - containerPort: 8080
 ---
