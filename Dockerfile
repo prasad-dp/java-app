@@ -3,8 +3,8 @@ FROM maven:3.8.4-openjdk-17-slim AS build
 WORKDIR /app
 
 # Copy the pom.xml and source code
-COPY my-web-demo/pom.xml .
-COPY my-we-demo/src ./src
+COPY /pom.xml .
+COPY /src ./src
 
 # Package the application (skipping tests for speed)
 RUN mvn clean package -DskipTests
