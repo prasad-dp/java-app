@@ -10,7 +10,7 @@ COPY my-we-demo/src ./src
 RUN mvn clean package -DskipTests
 
 # Stage 2: Run the application
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
 
 # Copy the built jar from the build stage(stage 1 to stage 2)
