@@ -41,7 +41,7 @@ pipeline {
                             // ONE COMMAND: Clean, Build JAR, and Run Sonar Scan
                             // This bypasses the need for the "SonarScanner" tool installation
                             sh """
-                                mvn clean package sonar:sonar \
+                                mvn clean package org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
                                 -DskipTests \
                                 -Dsonar.projectKey=${SONAR_PROJECT_KEY}
                             """
@@ -93,3 +93,4 @@ pipeline {
         }
     }
 }
+
