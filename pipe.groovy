@@ -52,7 +52,9 @@ pipeline {
                     def img = docker.build("${IMAGE_NAME}:${VERSION}", ".")
 
                     // Scan Docker Image (Container Security)
-                    sh "trivy image ${IMAGE_NAME}:${VERSION} --severity HIGH,CRITICAL"
+                   // sh "trivy image ${IMAGE_NAME}:${VERSION} --severity HIGH,CRITICAL" - it consumers a ot of memory 
+                    // Added '--scanners vuln' to skip memory-heavy secret scanning
+                   sh "trivy image --scanners vuln ${IMAGE_NAME}:${VERSION} --severity HIGH,CRITICAL"
 
                     // Push to Docker Hub
                     docker.withRegistry('', 'docker-hub-creds') {
@@ -93,4 +95,5 @@ pipeline {
         }
     }
 }
+
 
