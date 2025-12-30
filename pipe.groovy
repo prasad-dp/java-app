@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_USER = 'prasad315'
+        DOCKER_USER = 'user@docker'  //add your docker registry user name.
         IMAGE_NAME  = "${DOCKER_USER}/java-welcome-app"
         GIT_REPO    = "github.com/prasad-dp/java-app.git"
         VERSION     = "v${env.BUILD_ID}"
@@ -96,6 +96,7 @@ pipeline {
         }
     }
 }
+
 
 
 
