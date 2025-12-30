@@ -77,8 +77,9 @@ pipeline {
                         cd temp-manifest-update
 
                         # 3. CONFIGURE GIT
-                        git config user.email "durgaprasadkalepuu@gmail.com"
-                        git config user.name "prasad-dp"
+                       // uncomment below two while executing the pipeline don't forgot to add github mail and user.
+                       // git config user.email "github mail"
+                       // git config user.name "github user"
 
                         # 4. UPDATE YAML
                         sed -i 's|image: .*|image: ${IMAGE_NAME}:${VERSION}|g' k8s/deployment.yaml
@@ -95,5 +96,6 @@ pipeline {
         }
     }
 }
+
 
 
